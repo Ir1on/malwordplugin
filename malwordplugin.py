@@ -220,9 +220,9 @@ def createplugin(args):
     """
     print("[+] Writing files to zip")
     make_zip = zipfile.ZipFile(f"{args.output}/malicious.zip", 'w')
-    make_zip.write('temp/WebModule.php')
-    make_zip.write('temp/RemoteModule.php')
-    make_zip.write('temp/Deathworld.php')
+    make_zip.write('temp/WebModule.php', 'WebModule.php')
+    make_zip.write('temp/RemoteModule.php', 'RemoteModule.php')
+    make_zip.write('temp/Deathworld.php', 'Deathworld.php')
     print("[+] Cleaning up files")
     os.system("rm -rf temp")
     # Useful Info
